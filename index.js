@@ -4,14 +4,16 @@ import mongoose from "mongoose";
 import cors from "cors";
 import authRoute from "./routes/authRoute.js";
 import leadRoute from "./routes/leadRoute.js";
+import categoryRoute from "./routes/categoryRoute.js";
 
 const app = express();
 const corsOptions = { origin: 'http://localhost:5173', credentials: true };
 app.use(cors(corsOptions));
 app.use(express.json());
 
-app.use('/auth', authRoute);
-app.use('/lead', leadRoute);
+app.use('/category', categoryRoute); // done
+app.use('/auth', authRoute); // done
+app.use('/lead', leadRoute); // done
 
 app.use((error, req, res, next) => {
     const err = {

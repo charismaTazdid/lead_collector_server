@@ -4,7 +4,7 @@ import Leads from "../model/leads.js";
 export const createLead = async (req, res) => {
     const leadData = req.body;
     try {
-        const newLead = Leads(leadData);
+        const newLead = new Leads(leadData);
         await newLead.save();
         return res.status(201).json(newLead);
     } catch (error) {
@@ -12,9 +12,11 @@ export const createLead = async (req, res) => {
     }
 };
 
-export const getAllLead = (req, res) => {
+// http://localhost:5000/lead/getAllLead
+export const getAllLead = async (req, res) => {
     try {
-        return "I will bring all the lead data to you"
+        const leads = await Leads.find({});
+        res.status(200).json(leads);
     } catch (error) {
         console.log(error)
     }
