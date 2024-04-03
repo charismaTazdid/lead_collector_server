@@ -33,10 +33,10 @@ export const login = async (req, res, next) => {
             return next(customError(400, "Wrong Password"))
         };
         const token = jwt.sign({ id: user._id, role: user.role, userName: userName }, process.env.JWT_SECRET);
-        const { password, role, ...restDetails } = user._doc;
-        const cookieAge = 10 * 60 * 60 * 1000; // 10 hours 
-        res.cookie("token", token, { httpOnly: true, maxAge: cookieAge }).status(200).send({ ...restDetails });
-        // res.status(200).send({ token });
+        // const { password, role, ...restDetails } = user._doc;
+        // const cookieAge = 10 * 60 * 60 * 1000; // 10 hours 
+        // res.cookie("token", token, { httpOnly: true, maxAge: cookieAge }).status(200).send({ ...restDetails });
+        res.status(200).send({ token });
     } catch (error) {
         next(error)
     }
