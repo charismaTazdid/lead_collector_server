@@ -1,4 +1,5 @@
 import User from "../model/user.js";
+import jwt from "jsonwebtoken";
 import { customError } from "../utilits/customError.js";
 import bcrypt from "bcrypt";
 
@@ -16,16 +17,27 @@ export const createUser = async (req, res, next) => {
         await newUser.save();
         res.status(201).json(newUser)
     } catch (error) {
-        // res.status(403).json(error.message)
         next(error)
     }
 };
 
 // http://localhost:5000/auth/login
-export const login = (req, res) => {
+export const login = async (req, res, next) => {
+    const { userName } = req.body;
     try {
-        return "I will response while someone try to login";
+        const user = await User.findOne({ userName: userName });
+        if (!user) return next(customError(404, "User Not Found With This User Name"))
+
+        const isPasswordMatch = bcrypt.compareSync(req.body.password, user.password);
+        if (!isPasswordMatch) {
+            return next(customError(400, "Wrong Password"))
+        };
+        const token = jwt.sign({ id: user._id, role: user.role, userName: userName }, process.env.JWT_SECRET);
+        // const { password, role, ...restDetails } = user._doc;
+        // const cookieAge = 10 * 60 * 60 * 1000; // 10 day 
+        // res.cookie("token", token, { httpOnly: true, maxAge: cookieAge }).status(200).send({ ...restDetails });
+        res.status(200).send({ token });
     } catch (error) {
-        console.log(error)
+        next(error)
     }
 };

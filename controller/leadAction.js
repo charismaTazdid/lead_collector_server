@@ -1,8 +1,12 @@
 import Leads from "../model/leads.js";
 
-export const createLead = (req, res) => {
+// http://localhost:5000/lead/createLead
+export const createLead = async (req, res) => {
+    const leadData = req.body;
     try {
-        return "I will create new Lead"
+        const newLead = Leads(leadData);
+        await newLead.save();
+        return res.status(201).json(newLead);
     } catch (error) {
         console.log(error)
     }
