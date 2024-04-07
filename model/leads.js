@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const LeadSchema = new mongoose.Schema({
     companyName: { type: String, required: true },
-    category: { type: String, required: true },
+    categoryName: { type: String, required: true },
     country: { type: String },
     website: { type: String, required: true },
     primaryEmail: { type: String },
