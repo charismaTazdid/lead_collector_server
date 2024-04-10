@@ -43,11 +43,22 @@ export const login = async (req, res, next) => {
 };
 
 // http:localhost:5000/auth/getAllUser
-
 export const getAllUser = async (req, res) => {
     try {
         const users = await User.find({})
         res.status(200).json(users)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+// /auth/deleteUser
+
+export const deleteUser = async (req, res) => {
+    const { id } = req.params;
+    try {
+        await User.findByIdAndDelete(id)
+        res.status(200).json({ message: "user deleted successfully" })
     } catch (error) {
         console.log(error)
     }

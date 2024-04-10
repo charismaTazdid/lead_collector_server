@@ -7,6 +7,7 @@ import leadRoute from "./routes/leadRoute.js";
 import categoryRoute from "./routes/categoryRoute.js";
 
 const app = express();
+// const corsOptions = { origin: 'https://leads.topmarketers.net', credentials: true };
 const corsOptions = { origin: 'http://localhost:5173', credentials: true };
 app.use(cors(corsOptions));
 app.use(express.json());
