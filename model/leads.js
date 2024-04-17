@@ -4,7 +4,7 @@ const LeadSchema = new mongoose.Schema({
     companyName: { type: String, required: true },
     categoryName: { type: String, required: true },
     country: { type: String },
-    website: { type: String, required: true },
+    website: { type: String, required: true, unique: true },
     primaryEmail: { type: String },
     secondaryEmail: { type: String },
     phone: { type: String },
