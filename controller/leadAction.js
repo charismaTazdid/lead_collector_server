@@ -21,3 +21,14 @@ export const getAllLead = async (req, res) => {
         console.log(error)
     }
 };
+
+// http://localhost:5000/lead/deleteLead/:id
+export const deleteLead = async (req, res) => {
+    const { id } = req.params;
+    try {
+        await Leads.findByIdAndDelete(id);
+        res.status(202).json({ message: "Collection Deleted Successfully." })
+    } catch (error) {
+        console.log(error)
+    }
+}
